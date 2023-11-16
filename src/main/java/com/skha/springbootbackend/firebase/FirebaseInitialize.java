@@ -23,7 +23,7 @@ public class FirebaseInitialize {
     public void initialize() {
         try {
             FileInputStream serviceAccount =
-                    new FileInputStream("ismailshop-api-firebase-adminsdk-e7i8l-ade530da26.json");
+                    new FileInputStream("./ismailshop-api-firebase-adminsdk-e7i8l-ade530da26.json");
 
             FirebaseOptions options = new FirebaseOptions.Builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
