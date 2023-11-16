@@ -18,10 +18,18 @@ public class TshirtController {
 
   final  String COLLECTION_NAME = "Tshirts";
 
+
     @Autowired
     private ItemService tshirtsService;
 
+
     @GetMapping()
+    //@Operation(summary = "Returns A Director Document Corresponding To Providied Id")
+    public List<Tshirt> TshirtRetrieveAlHandler() throws ExecutionException, InterruptedException {
+        return  tshirtsService.getAllItems(COLLECTION_NAME);
+    }
+
+   /* @GetMapping()
     //@Operation(summary = "Returns A Director Document Corresponding To Providied Id")
     public List<Tshirt> TshirtRetrieveAlHandler() throws ExecutionException, InterruptedException {
         return  (List<Tshirt>)tshirtsService.getAllItems(COLLECTION_NAME, Tshirt.class);
@@ -45,7 +53,7 @@ public class TshirtController {
     public Tshirt tshirtUpdationHandler(@PathVariable(name = "tshirtName", required = true)final String id,
                                             @RequestBody Tshirt tshirt) throws JSONException {
         return (Tshirt) tshirtsService.updateItem( tshirt, id, COLLECTION_NAME );
-    }
+    }*/
 
     @DeleteMapping(value = "/{tshirtName}", produces = MediaType.APPLICATION_JSON_VALUE)
    // @Operation(summary = "Deletes director and corresponding directorMovieMapping documents")

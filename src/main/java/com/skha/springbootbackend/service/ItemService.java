@@ -3,6 +3,8 @@ package com.skha.springbootbackend.service;
 import com.google.cloud.firestore.*;
 
 
+import com.google.firebase.cloud.FirestoreClient;
+import com.skha.springbootbackend.model.Tshirt;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONException;
@@ -21,11 +23,11 @@ import java.util.concurrent.ExecutionException;
 @Service
 @AllArgsConstructor
 @Slf4j
-public  class ItemService<T> {
+public  class ItemService {
 
-    private final Firestore firestore;
+   // private final Firestore firestore;
 
-    public T getItemByName(  final String name ,final String CollectionName, Class<T> clazz) {
+   /* public T getItemByName(  final String name ,final String CollectionName, Class<T> clazz) {
         DocumentSnapshot retrievedItem = null;
         try {
             retrievedItem = firestore.collection(CollectionName).document(name).get().get();
@@ -66,6 +68,23 @@ public  class ItemService<T> {
         }
 
         return itemList;
+    }*/
+
+
+    public List<Tshirt>getAllItems(final String CollectionName ) throws ExecutionException, InterruptedException {
+        Firestore firestore = FirestoreClient.getFirestore();
+        List<Tshirt> itemList = new ArrayList<>();
+
+        // Retrieve all products from the "products" collection in Firestore
+        CollectionReference itemsCollection = firestore.collection(CollectionName);
+        QuerySnapshot querySnapshot = itemsCollection.get().get();
+
+        for (QueryDocumentSnapshot document : querySnapshot) {
+            Tshirt item = document.toObject(Tshirt.class);
+            itemList.add(item);
+        }
+
+        return itemList;
     }
 
 
@@ -85,6 +104,7 @@ public  class ItemService<T> {
 
 
     public void deleteItem(final String ItemId ,final String collectionName) throws InterruptedException, ExecutionException {
+        Firestore firestore = FirestoreClient.getFirestore();
         firestore.collection(collectionName).document(ItemId).delete();
 
 

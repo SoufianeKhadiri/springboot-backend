@@ -20,26 +20,28 @@ import java.io.IOException;
 public class FirebaseInitialize {
 
     @PostConstruct
-    public void Initialize() throws IOException {
-        FileInputStream serviceAccount =
-                new FileInputStream("./ismailshop-api-firebase-adminsdk-e7i8l-ade530da26.json");
+    public void initialize() {
+        try {
+            FileInputStream serviceAccount =
+                    new FileInputStream("ismailshop-api-firebase-adminsdk-e7i8l-ade530da26.json");
 
-        FirebaseOptions options = new FirebaseOptions.Builder()
-                .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                .build();
+            FirebaseOptions options = new FirebaseOptions.Builder()
+                    .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                    .setDatabaseUrl("https://chatapp-e6e15.firebaseio.com")
+                    .build();
 
-        FirebaseApp.initializeApp(options);
+            FirebaseApp.initializeApp(options);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
-    @Bean
-    public Firestore firestore() {
-        return FirestoreClient.getFirestore();
-    }
 
-    @Bean
+
+/*    @Bean
     public FirebaseAuth firebaseAuth(){
         return FirebaseAuth.getInstance();
-    }
+    }*/
 
 }
 
