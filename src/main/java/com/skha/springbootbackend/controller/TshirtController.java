@@ -29,6 +29,12 @@ public class TshirtController {
         return  tshirtsService.getAllItems(COLLECTION_NAME);
     }
 
+    @GetMapping("/hello")
+    //@Operation(summary = "Returns A Director Document Corresponding To Providied Id")
+    public String sayhello() throws ExecutionException, InterruptedException {
+        return  "hello";
+    }
+
    /* @GetMapping()
     //@Operation(summary = "Returns A Director Document Corresponding To Providied Id")
     public List<Tshirt> TshirtRetrieveAlHandler() throws ExecutionException, InterruptedException {
