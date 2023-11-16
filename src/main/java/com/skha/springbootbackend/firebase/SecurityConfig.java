@@ -1,4 +1,3 @@
-/*
 package com.skha.springbootbackend.firebase;
 
 
@@ -31,4 +30,3 @@ public class SecurityConfig  {
     }
 
 }
-*/

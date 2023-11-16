@@ -23,7 +23,7 @@ public class TshirtController {
     private ItemService tshirtsService;
 
 
-    @GetMapping()
+    @GetMapping("/all")
     //@Operation(summary = "Returns A Director Document Corresponding To Providied Id")
     public List<Tshirt> TshirtRetrieveAlHandler() throws ExecutionException, InterruptedException {
         return  tshirtsService.getAllItems(COLLECTION_NAME);
