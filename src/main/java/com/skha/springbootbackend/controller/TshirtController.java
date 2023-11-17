@@ -1,5 +1,11 @@
 package com.skha.springbootbackend.controller;
 
+import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.CollectionReference;
+import com.google.cloud.firestore.Firestore;
+import com.google.cloud.firestore.QueryDocumentSnapshot;
+import com.google.cloud.firestore.QuerySnapshot;
+import com.google.firebase.cloud.FirestoreClient;
 import com.skha.springbootbackend.model.Tshirt;
 import com.skha.springbootbackend.service.ItemService;
 import org.json.JSONException;
@@ -10,8 +16,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/tshirts" , produces = MediaType.APPLICATION_JSON_VALUE)
@@ -29,6 +37,25 @@ public class TshirtController {
     //@Operation(summary = "Returns A Director Document Corresponding To Providied Id")
     public List<Tshirt> TshirtRetrieveAlHandler() throws ExecutionException, InterruptedException {
         return  tshirtsService.getAllItems(COLLECTION_NAME);
+    }
+    @GetMapping("/fire")
+    public List<Tshirt> retrieveAll(){
+        Firestore firestore = FirestoreClient.getFirestore();
+        CollectionReference collectionReference = firestore.collection(COLLECTION_NAME);;
+        ApiFuture<QuerySnapshot> querySnapshotApiFuture = collectionReference.get();
+
+        try {
+            List<QueryDocumentSnapshot> queryDocumentSnapshots = querySnapshotApiFuture.get().getDocuments();
+
+            return queryDocumentSnapshots.stream()
+                    .map(queryDocumentSnapshot -> queryDocumentSnapshot.toObject(Tshirt.class))
+                    .collect(Collectors.toList());
+
+        } catch (InterruptedException | ExecutionException e) {
+
+        }
+        return Collections.<Tshirt>emptyList();
+
     }
     @GetMapping("/test")
     //@Operation(summary = "Returns A Director Document Corresponding To Providied Id")
