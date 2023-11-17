@@ -1,5 +1,6 @@
 package com.skha.springbootbackend.service;
 
+import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 
 
@@ -69,6 +70,22 @@ public  class ItemService {
 
         return itemList;
     }*/
+
+
+    public List<Tshirt> getAllProducts(final String CollectionName ) throws ExecutionException, InterruptedException {
+        List<Tshirt> productList = new ArrayList<>();
+        Firestore firestore = FirestoreClient.getFirestore();
+        // Retrieve all products from the "products" collection in Firestore
+        CollectionReference productsCollection = firestore.collection(CollectionName);
+        QuerySnapshot querySnapshot = productsCollection.get().get();
+
+        for (QueryDocumentSnapshot document : querySnapshot) {
+            Tshirt product = document.toObject(Tshirt.class);
+            productList.add(product);
+        }
+
+        return productList;
+    }
 
 
     public List<Tshirt>getAllItems(final String CollectionName ) throws ExecutionException, InterruptedException {

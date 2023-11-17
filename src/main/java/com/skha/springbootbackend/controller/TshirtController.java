@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 @RestController
-@RequestMapping(value = "/api/tshirts" , produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/tshirts" , produces = MediaType.APPLICATION_JSON_VALUE)
 public class TshirtController {
 
   final  String COLLECTION_NAME = "Tshirts";
@@ -23,7 +23,7 @@ public class TshirtController {
     private ItemService tshirtsService;
 
 
-    @GetMapping("/all")
+    @GetMapping()
     //@Operation(summary = "Returns A Director Document Corresponding To Providied Id")
     public List<Tshirt> TshirtRetrieveAlHandler() throws ExecutionException, InterruptedException {
         return  tshirtsService.getAllItems(COLLECTION_NAME);
