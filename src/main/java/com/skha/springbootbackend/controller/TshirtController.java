@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -22,11 +23,25 @@ public class TshirtController {
     @Autowired
     private ItemService tshirtsService;
 
+    List<Tshirt> tshirtsList = new ArrayList<>();
 
     @GetMapping()
     //@Operation(summary = "Returns A Director Document Corresponding To Providied Id")
     public List<Tshirt> TshirtRetrieveAlHandler() throws ExecutionException, InterruptedException {
         return  tshirtsService.getAllItems(COLLECTION_NAME);
+    }
+    @GetMapping("/test")
+    //@Operation(summary = "Returns A Director Document Corresponding To Providied Id")
+    public List<Tshirt> test() throws ExecutionException, InterruptedException {
+           ArrayList<String> fotos = new ArrayList<String>();
+           fotos.add("foto1");
+           fotos.add("foto2");
+           Tshirt t1 = new Tshirt("name","brand1","34","34",fotos,"desc");
+           Tshirt t2 = new Tshirt("name2","brand2","342","342",fotos,"desc2");
+
+           tshirtsList.add(t1);
+           tshirtsList.add(t2);
+           return tshirtsList;
     }
 
     @GetMapping("/hello")
